@@ -11,7 +11,7 @@ impl Blockchain {
     }
 
     pub fn add_block(&mut self, data: &str) {
-        let prev_block = self.blocks.last().unwrap().clone();
+        let prev_block = self.blocks.last().unwrap();
         let new_block = Block::new(data, prev_block.hash.clone());
         self.blocks.push(new_block);
     }
