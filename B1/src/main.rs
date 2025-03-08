@@ -1,12 +1,15 @@
-pub mod block;
-pub mod blockchain;
+mod block;
+mod blockchain;
+mod transaction;
+mod node;
+mod merkle_tree;
+mod cli;
+mod wallet;
 
-use blockchain::Blockchain;
-
+use cli::Cli;
+use clap::Parser;
 
 fn main() {
-    let mut blockchain = Blockchain::new();
-    blockchain.add_block("Send 1 BTC to Alice");
-    blockchain.add_block("Send 2 BTC to Bob");
-    blockchain.print_block();
+    let cli = Cli::parse();
+    cli.run();
 }

@@ -1,60 +1,63 @@
-use std::time::{SystemTime, UNIX_EPOCH};
+use chrono::Utc;
+use serde::{Serialize, Deserialize};
+use crate::transaction::Transaction;
+use crate::merkle_tree::MerkleTree;
 use sha2::{Sha256, Digest};
-use std::fmt::Write;
 
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Block {
-    time_stamp: i64,
-    // data is the actual valuable information containing in the block (serialize to binary)
-    data: Vec<u8>,
-    prev_block_hash: Vec<u8>,
-    // the hash of the block
-    pub hash: Vec<u8>
+    pub index: u64,
+    pub timestamp: i64,
+    pub transactions: Vec<Transaction>,
+    pub previous_hash: String,
+    pub hash: String,
+    pub nonce: u64,
+    pub merkle_root: String, 
 }
 
-// #[allow(unused)]
 impl Block {
-    pub fn new(data: &str, prev_block_hash: Vec<u8>) -> Block {
+    // 创建一个新区块
+    pub fn new(index: u64, timestamp: i64, transactions: Vec<Transaction>, previous_hash: String) -> Self {
+        let merkle_tree = MerkleTree::new(transactions.iter().map(|tx| tx.to_string()).collect());
+        let merkle_root = hex::encode(merkle_tree.root_hash().unwrap());
+
         let mut block = Block {
-            time_stamp: SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs() as i64,
-            data: data.as_bytes().to_vec(),
-            prev_block_hash,
-            hash: Vec::new()
+            index,
+            timestamp,
+            transactions,
+            previous_hash,
+            hash: String::new(),
+            nonce: 0,
+            merkle_root,
         };
-        block.set_hash();
+        block.hash = block.calculate_hash();
         block
     }
 
-    // concatenate block values and use sha256 to set this block hash
-    fn set_hash(&mut self) {
-        // concat change from [[1,2,3], [4,5,6]] to [1,2,3,4,5,6]
-        let headers = vec![
-            &self.time_stamp.to_le_bytes() as &[u8],
-            &self.data,
-            &self.prev_block_hash
-        ].concat();
-
-        let mut hasher = Sha256::new();
-        hasher.update(headers);
-        self.hash = hasher.finalize().to_vec();
+    // 计算区块的哈希值
+    pub fn calculate_hash(&self) -> String {
+        let input = format!(
+            "{}{}{}{}{}{}",
+            self.index,
+            self.timestamp,
+            self.merkle_root,
+            self.transactions.len(),
+            self.previous_hash,
+            self.nonce
+        );
+        let mut hasher = Sha256::new(); 
+        hasher.update(input);
+        format!("{:x}", hasher.finalize())
     }
+    
 
-    pub fn new_genesis_block() -> Block {
-        Block::new("Genesis Block", vec![])
+    // 挖矿（PoW）
+    pub fn mine_block(&mut self, difficulty: usize) {
+        let target = "0".repeat(difficulty);
+        while &self.hash[..difficulty] != target {
+            self.nonce += 1;
+            self.hash = self.calculate_hash();
+        }
+        println!("Block mined: {}", self.hash);
     }
-
-    pub fn print_content(&self) {
-        println!("Timestamp: {}", self.time_stamp);
-        println!("Data: {}", String::from_utf8_lossy(&self.data));
-        println!("Previous Bloch Hash: {}", hex_string(&self.prev_block_hash));
-        println!("Hash {}", hex_string(&self.hash));
-    }
-}
-
-// change byte code to hex string
-fn hex_string(vec: &Vec<u8>) -> String {
-    let mut s = String::new();
-    for byte in vec {
-        write!(&mut s, "{:02x}", byte).expect("Unable to write");
-    }
-    s
 }
