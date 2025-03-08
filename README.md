@@ -242,7 +242,7 @@ impl NodeDiscovery {
 
 ## 详细文档
 
-- **B1 详细文档**：请进入 [b1/README.md](B1/README.md) 查看。
+- **B1 详细文档**：请进入 [B1/README.md](B1/README.md) 查看。
 - **B2 详细文档**：请进入 [b2/README.md](B2/README.md) 查看。
 - **B3 详细文档**：请进入 [b3/README.md](B3/README.md) 查看。
 
