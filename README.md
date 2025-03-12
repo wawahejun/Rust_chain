@@ -1,153 +1,150 @@
-# Rust 区块链框架
+# Rust Blockchain Framework
 
-## 项目概述
+## Project Overview
 
-本项目是一个模块化的 Rust 区块链框架demo，包含三个版本：B1（教学版）、B2（核心版）和 B3（扩展版）。每个版本针对不同的使用场景进行了优化和扩展，适合从学习区块链基础到开发区块链应用的需求。
-
----
-
-## 版本对比
-
-| 特性                | B1（教学版）                     | B2（核心版）                     | B3（扩展版）                     |
-|---------------------|----------------------------------|----------------------------------|----------------------------------|
-| **目标用户**         | 初学者、教学场景                 | 开发者、快速原型                 | 高级开发者、生产环境             |
-| **核心功能**         | 区块、交易、挖矿、钱包           | 区块、交易、挖矿                 | 区块、交易、挖矿、智能合约、隐私 |
-| **扩展功能**         | 文件存储、CLI 交互               | 无                               | 智能合约、隐私交易、P2P 网络     |
-| **性能优化**         | 适中                            | 高                               | 高                               |
-| **代码复杂度**       | 中（含详细注释）                 | 低                               | 高                               |
+This project is a modular Rust blockchain framework demo with three versions: B1 (Educational), B2 (Core), and B3 (Extended). Each version is optimized and expanded for different use cases, suitable for needs ranging from learning blockchain fundamentals to developing blockchain applications.
 
 ---
 
-## 项目结构
+## Version Comparison
 
-### B1（教学版）
+| Feature            | B1 (Educational)                 | B2 (Core)                       | B3 (Extended)                     |
+|--------------------|---------------------------------|----------------------------------|----------------------------------|
+| **Target Users**    | Beginners, Teaching Scenarios   | Developers, Rapid Prototyping   | Advanced Developers, Production  |
+| **Core Features**   | Blocks, Transactions, Mining, Wallets | Blocks, Transactions, Mining | Blocks, Transactions, Mining, Smart Contracts, Privacy |
+| **Extended Features** | File Storage, CLI Interaction | None | Smart Contracts, Private Transactions, P2P Network |
+| **Performance Optimization** | Moderate | High | High |
+| **Code Complexity** | Medium (with detailed comments) | Low | High |
+
+---
+
+## Project Structure
+
+### B1 (Educational)
 ```
 src/
-├── block.rs          # 区块核心结构（含完整注释）
-├── blockchain.rs     # 区块链管理（含文件存储）
-├── cli.rs            # 命令行交互界面
-├── merkle_tree.rs    # 默克尔树完整实现
-├── node.rs           # 简单节点网络功能
-├── pow.rs            # 工作量证明模块
-├── transaction.rs    # 交易系统（含钱包集成）
-├── utils.rs          # 辅助工具集
-├── wallet.rs         # 独立钱包模块
-└── main.rs           # 命令行主程序入口
+├── block.rs          # Block core structure (with full comments)
+├── blockchain.rs     # Blockchain management (with file storage)
+├── cli.rs            # Command line interface
+├── merkle_tree.rs    # Complete Merkle tree implementation
+├── node.rs           # Simple node networking functionality
+├── pow.rs            # Proof of work module
+├── transaction.rs    # Transaction system (with wallet integration)
+├── utils.rs          # Utility toolkit
+├── wallet.rs         # Independent wallet module
+└── main.rs           # Command line main program entry
 ```
 
-### B2（核心版）
+### B2 (Core)
 ```
 src/
-├── block.rs          # 精简区块结构（移除冗余字段）
-├── blockchain.rs     # 区块链核心逻辑（移除文件存储）
-├── merkle_tree.rs    # 优化默克尔树实现
-├── transaction.rs    # 基础交易验证
-├── node.rs           # 简单节点网络功能
-└── main.rs           # 直接运行示例
-
+├── block.rs          # Streamlined block structure (redundant fields removed)
+├── blockchain.rs     # Blockchain core logic (file storage removed)
+├── merkle_tree.rs    # Optimized Merkle tree implementation
+├── transaction.rs    # Basic transaction verification
+├── node.rs           # Simple node networking functionality
+└── main.rs           # Direct run example
 ```
 
-### B3（扩展版）
+### B3 (Extended)
 ```
 src/
-├── block.rs          # 区块核心结构
-├── blockchain.rs     # 区块链管理
-├── transaction.rs    # 交易系统
-├── merkle_tree.rs    # 默克尔树实现
-├── node.rs           # P2P 网络节点
-├── cli.rs            # 命令行交互界面
-├── wallet.rs         # 钱包管理
-├── smart_contract.rs # 智能合约支持
-├── privacy.rs        # 隐私交易实现
-├── pow.rs            # 工作量证明模块
-├── utils.rs          # 辅助工具集
-└── main.rs           # 主程序入口
+├── block.rs          # Block core structure
+├── blockchain.rs     # Blockchain management
+├── transaction.rs    # Transaction system
+├── merkle_tree.rs    # Merkle tree implementation
+├── node.rs           # P2P network node
+├── cli.rs            # Command line interface
+├── wallet.rs         # Wallet management
+├── smart_contract.rs # Smart contract support
+├── privacy.rs        # Private transaction implementation
+├── pow.rs            # Proof of work module
+├── utils.rs          # Utility toolkit
+└── main.rs           # Main program entry
 ```
 
 ---
 
-## 核心功能
+## Core Features
 
-### 1. 区块与区块链
-- **区块**：包含索引、时间戳、交易列表、哈希值等。
-- **区块链**：管理区块的链式结构，支持创世区块、添加新区块、验证链完整性。
-- **默克尔树**：用于高效验证交易数据的完整性。
+### 1. Blocks and Blockchain
+- **Block**: Includes index, timestamp, transaction list, hash value, etc.
+- **Blockchain**: Manages the chain structure of blocks, supports genesis block, adding new blocks, verifying chain integrity.
+- **Merkle Tree**: Used for efficient verification of transaction data integrity.
 
-### 2. 交易与钱包
-- **交易**：支持发送方、接收方、金额和签名验证。
-- **钱包**：生成密钥对、签名数据、验证签名。
+### 2. Transactions and Wallet
+- **Transaction**: Supports sender, receiver, amount, and signature verification.
+- **Wallet**: Generates key pairs, signs data, verifies signatures.
 
-### 3. 工作量证明（PoW）
-- 通过调整 nonce 值，使区块哈希满足特定条件（前缀包含指定数量的 0）。
-- 难度可配置，控制挖矿复杂度。
+### 3. Proof of Work (PoW)
+- Adjusts nonce value to make block hash meet specific conditions (prefix contains specified number of 0s).
+- Configurable difficulty controls mining complexity.
 
-### 4. 智能合约（B3 独有拓展）
-- 支持部署和执行简单的智能合约。
-- 合约状态存储在区块链中。
+### 4. Smart Contracts (B3 Exclusive)
+- Supports deployment and execution of simple smart contracts.
+- Contract state stored in the blockchain.
 
-### 5. 隐私交易（B3 独有拓展）
-- 使用零知识证明（ZKP）保护交易隐私。
-- 支持创建和验证隐私交易。
+### 5. Private Transactions (B3 Exclusive)
+- Uses Zero-Knowledge Proofs (ZKP) to protect transaction privacy.
+- Supports creating and verifying private transactions.
 
-### 6. P2P 网络（B3 独有拓展）
-- 实现节点间的区块链同步。
-- 支持对等节点发现和连接。
+### 6. P2P Network (B3 Exclusive)
+- Implements blockchain synchronization between nodes.
+- Supports peer node discovery and connection.
 
 ---
 
-## 使用指南
+## Usage Guide
 
-### 安装与运行
+### Installation and Running
 ```bash
-# 克隆仓库
-git clone <仓库>
+# Clone repository
+git clone <repository>
 cd 
 
-# 编译项目
+# Compile project
 cargo build --release
 
-# 运行 B1 版本
+# Run B1 version
 cargo run --bin b1
 
-# 运行 B2 版本
+# Run B2 version
 cargo run --bin b2
 
-# 运行 B3 版本
+# Run B3 version
 cargo run --bin b3
 ```
 
-### 命令行工具（B1/B3）
+### Command Line Tools (B1/B3)
 ```bash
-# 创建钱包
+# Create wallet
 cargo run --bin b1 -- create-wallet
 
-# 发起交易
-cargo run --bin b1 -- add-transaction --sender <发送方地址> --receiver <接收方地址> --amount <金额>
+# Initiate transaction
+cargo run --bin b1 -- add-transaction --sender <sender address> --receiver <receiver address> --amount <amount>
 
-# 挖矿
-cargo run --bin b1 -- mine-block --miner <挖矿地址>
+# Mining
+cargo run --bin b1 -- mine-block --miner <miner address>
 
-# 部署智能合约（B3）
-cargo run --bin b3 -- deploy-contract --code <合约代码>
+# Deploy smart contract (B3)
+cargo run --bin b3 -- deploy-contract --code <contract code>
 
-# 创建隐私交易（B3）
-cargo run --bin b3 -- create-privacy-transaction --amount <金额>
+# Create private transaction (B3)
+cargo run --bin b3 -- create-privacy-transaction --amount <amount>
 ```
 
+## Extended Development
+## Some B3 extension feature code has not been fully uploaded to the repository, see documentation to complete and resolve on your own. Below are some hints for completing certain extension features
 
+### 1. Smart Contracts
+The current `smart_contract.rs` implements basic contract functionality, but the following parts need to be completed:
+- **Contract Language Support**: Extend support for Solidity or other advanced contract languages.
+- **Gas Mechanism**: Introduce a Gas fee mechanism for contract execution.
+- **Event Logs**: Add contract event logging functionality.
 
-## 扩展开发
-## B3部分拓展功能代码部分未完全上传仓库，可见文档自行就行完善与解决，以下是部分扩展功能代码完善提示
-
-### 1. 智能合约
-当前 `smart_contract.rs` 实现了基础的合约功能，但以下部分需要完善：
-- **合约语言支持**：扩展支持 Solidity 或其他高级合约语言。
-- **Gas 机制**：为合约执行引入 Gas 费用机制。
-- **事件日志**：添加合约事件日志功能。
-
-示例代码：
+Example code:
 ```rust
-// 扩展 Gas 机制
+// Extending Gas mechanism
 pub struct GasCounter {
     gas_limit: u64,
     gas_used: u64,
@@ -169,91 +166,89 @@ impl GasCounter {
 }
 ```
 
-### 2. 隐私交易
-当前 `privacy.rs` 实现了基础的零知识证明（ZKP）功能，但以下部分需要完善：
-- **性能优化**：优化 ZKP 的生成和验证性能。
-- **范围证明**：支持金额的范围证明。
-- **批量验证**：支持批量验证隐私交易。
+### 2. Private Transactions
+The current `privacy.rs` implements basic Zero-Knowledge Proof (ZKP) functionality, but the following parts need to be completed:
+- **Performance Optimization**: Optimize ZKP generation and verification performance.
+- **Range Proofs**: Support range proofs for amounts.
+- **Batch Verification**: Support batch verification of private transactions.
 
-示例代码：
+Example code:
 ```rust
-// 扩展范围证明
+// Extending range proofs
 pub struct RangeProof {
-    // 实现范围证明逻辑
+    // Implement range proof logic
 }
 
 impl RangeProof {
     pub fn new(amount: u64) -> Self {
-        // 初始化范围证明
+        // Initialize range proof
     }
 
     pub fn verify(&self) -> bool {
-        // 验证范围证明
+        // Verify range proof
     }
 }
 ```
 
-### 3. P2P 网络
-当前 `node.rs` 实现了基础的节点功能，但以下部分需要完善：
-- **节点发现**：实现 Kademlia DHT 节点发现协议。
-- **消息协议**：定义标准化的网络消息协议。
-- **分片支持**：支持区块链分片技术。
+### 3. P2P Network
+The current `node.rs` implements basic node functionality, but the following parts need to be completed:
+- **Node Discovery**: Implement Kademlia DHT node discovery protocol.
+- **Message Protocol**: Define standardized network message protocols.
+- **Sharding Support**: Support blockchain sharding technology.
 
-示例代码：
+### 4. Token Issuance
+*See the **project documentation** to improve and supplement on your own. This project does not provide complete token issuance code*
+
+Example code:
 ```rust
-// 扩展节点发现
+// Extending node discovery
 pub struct NodeDiscovery {
-    // 实现节点发现逻辑
+    // Implement node discovery logic
 }
 
 impl NodeDiscovery {
     pub fn new() -> Self {
-        // 初始化节点发现
+        // Initialize node discovery
     }
 
     pub fn discover_peers(&self) -> Vec<SocketAddr> {
-        // 发现对等节点
+        // Discover peer nodes
     }
 }
 ```
 
-### 4. 发币
-*自行见文档进行自我完善与补充，本项目不提供完整发币代码*
+### B1 Extension Suggestions
+- Add more detailed logs and debugging information.
+- Implement cross-chain functionality.
 
+### B2 Optimization Directions
+- Use more efficient hash algorithms (such as Blake3).
+- Optimize memory pool management.
 
-### B1 扩展建议
-- 添加更详细的日志和调试信息。
-- 实现跨链功能。
-
-### B2 优化方向
-- 使用更高效的哈希算法（如 Blake3）。
-- 优化内存池管理。
-
-### B3 高级功能 
-- 发币
-- 支持更复杂的智能合约语言（如 Solidity）。
-- 增强隐私交易的性能。
-- 跨链
-- 分布式网络
-- 其他拓展功能待完善
+### B3 Advanced Features
+- Token issuance
+- Support for more complex smart contract languages (like Solidity).
+- Enhance performance of private transactions.
+- Cross-chain
+- Distributed network
+- Other extension features to be improved
 
 ---
 
+## Detailed Documentation
 
-## 详细文档
+- **B1 Detailed Documentation**: Please go to [B1/readme.md](B1/readme.md) to view.
+- **B2 Detailed Documentation**: Please go to [B2/readme.md](B2/readme.md) to view.
+- **B3 Detailed Documentation**: Please go to [B3/readme.md](B3/readme.md) to view.
 
-- **B1 详细文档**：请进入 [B1/readme.md](B1/readme.md) 查看。
-- **B2 详细文档**：请进入 [B2/readme.md](B2/readme.md) 查看。
-- **B3 详细文档**：请进入 [B3/readme.md](B3/readme.md) 查看。
-
-项目实际展示结果截图见产品说明pdf
+Project actual demonstration screenshots can be found in the product description PDF.
 
 ---
 
-## 许可证
+## License
 
-本项目采用 MIT 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
+This project is licensed under the MIT License. Please refer to the [LICENSE](LICENSE) file for details.
 
---- 
+---
 
-通过整合 B1、B2 和 B3，开发者可以根据需求选择合适的版本进行开发和学习。B1 适合初学者，B2 适合快速原型开发，B3 适合高级应用场景。
+By integrating B1, B2, and B3, developers can choose the appropriate version for development and learning based on their needs. B1 is suitable for beginners, B2 is suitable for rapid prototype development, and B3 is suitable for advanced application scenarios.
