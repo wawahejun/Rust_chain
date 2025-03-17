@@ -1,152 +1,155 @@
-# B1 区块链实现
+# B1 Blockchain Implementation
 
-本仓库包含一个简单而全面的 Rust 区块链实现。该区块链支持关键功能，包括基于工作量证明的区块挖掘、交易签名和验证、钱包管理以及用于交互的命令行界面。
+This repository contains a simple yet comprehensive blockchain implementation in Rust. The blockchain supports key features including block mining with Proof of Work, transaction signing and verification, wallet management, and a command-line interface for interaction.
 
-## 目录
+## Table of Contents
 
-- [项目结构](#项目结构)
-- [核心组件](#核心组件)
-- [功能特性](#功能特性)
-- [开始使用](#开始使用)
-- [使用方法](#使用方法)
-- [技术细节](#技术细节)
+- [Project Structure](#project-structure)
+- [Core Components](#core-components)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Technical Details](#technical-details)
 
-## 项目结构
+## Project Structure
 
 ```
 blockchain-implementation/
 ├── src/
-│   ├── main.rs              # 应用程序入口点
-│   ├── block.rs             # 区块结构和方法
-│   ├── blockchain.rs        # 区块链结构和操作
-│   ├── transaction.rs       # 交易结构和签名
-│   ├── wallet.rs            # 钱包管理和密钥操作
-│   ├── merkle_tree.rs       # 交易的默克尔树实现
-│   ├── node.rs              # 网络节点实现
-│   ├── cli.rs               # 命令行界面
-│   ├── pow.rs               # 工作量证明实现
-│   └── utils.rs             # 实用功能
+│   ├── main.rs              # Entry point of the application
+│   ├── block.rs             # Block structure and methods
+│   ├── blockchain.rs        # Blockchain structure and operations
+│   ├── transaction.rs       # Transaction structure and signing
+│   ├── wallet.rs            # Wallet management and key operations
+│   ├── merkle_tree.rs       # Merkle tree implementation for transactions
+│   ├── node.rs              # Network node implementation
+│   ├── cli.rs               # Command-line interface
+│   ├── pow.rs               # Proof of Work implementation
+│   └── utils.rs             # Utility functions
 ```
 
-## 核心组件
+## Core Components
 
-### 区块 (`block.rs`)
-定义了核心区块结构，包含：
-- 区块索引
-- 时间戳
-- 交易列表
-- 前一区块哈希
-- 当前区块哈希
-- 随机数（用于工作量证明）
-- 交易的默克尔根
+### Block (`block.rs`)
+Defines the core block structure containing:
+- Block index
+- Timestamp
+- Transaction list
+- Previous block hash
+- Current block hash
+- Nonce (for Proof of Work)
+- Merkle root of transactions
 
-包括以下方法：
-- 创建新区块
-- 计算区块哈希
-- 挖掘区块（工作量证明）
+Includes methods for:
+- Creating new blocks
+- Calculating block hash
+- Mining blocks (Proof of Work)
 
-### 区块链 (`blockchain.rs`)
-管理区块链，功能包括：
-- 创建创世区块
-- 向链中添加新区块
-- 验证整个链的完整性
-- 将区块链保存到文件
-- 从文件加载区块链
+### Blockchain (`blockchain.rs`)
+Manages the chain of blocks with functionality for:
+- Creating the genesis block
+- Adding new blocks to the chain
+- Validating the entire chain's integrity
+- Persisting the blockchain to a file
+- Loading the blockchain from a file
 
-### 交易 (`transaction.rs`)
-定义交易结构，包含：
-- 发送方地址
-- 接收方地址
-- 金额
-- 数字签名
+### Transaction (`transaction.rs`)
+Defines transaction structure with:
+- Sender address
+- Receiver address
+- Amount
+- Digital signature
 
-提供以下方法：
-- 创建和签名交易
-- 验证交易签名
-- 将交易转换为字符串格式用于哈希计算
+Provides methods for:
+- Creating and signing transactions
+- Verifying transaction signatures
+- Converting transactions to string format for hashing
 
-### 钱包 (`wallet.rs`)
-实现加密货币钱包，功能包括：
-- ED25519密钥对生成
-- 从公钥派生地址
-- 使用私钥签名数据
-- 验证签名
+### Wallet (`wallet.rs`)
+Implements cryptocurrency wallets with:
+- ED25519 key pair generation
+- Address derivation from public key
+- Signing data with private key
+- Verifying signatures
 
-### 默克尔树 (`merkle_tree.rs`)
-实现默克尔树用于交易验证：
-- 从交易列表创建树
-- 为区块头计算默克尔根
-- 高效的交易验证
+### Merkle Tree (`merkle_tree.rs`)
+Implements a Merkle tree for transaction verification:
+- Creating trees from transaction lists
+- Computing the Merkle root for block headers
+- Efficient transaction verification
 
-### 节点 (`node.rs`)
-提供点对点网络功能：
-- 管理与对等节点的连接
-- 跨网络同步区块链
-- 管理区块链状态
+### Node (`node.rs`)
+Provides peer-to-peer networking capabilities:
+- Managing connections to peer nodes
+- Synchronizing blockchain across the network
+- Managing blockchain state
 
-### 命令行界面 (`cli.rs`)
-用于与区块链交互的命令行界面：
-- 创建新钱包
-- 添加交易
-- 挖掘区块
-- 验证区块链
+### CLI (`cli.rs`)
+Command-line interface for interacting with the blockchain:
+- Creating new wallets
+- Adding transactions
+- Mining blocks
+- Validating the blockchain
 
-## 功能特性
+## Features
 
-- **工作量证明共识**：可调整难度的区块挖掘
-- **交易安全**：使用ED25519的数字签名
-- **数据完整性**：使用默克尔树进行高效的交易验证
-- **数据持久化**：从文件存储保存和加载区块链状态
-- **网络功能**：P2P网络同步
-- **用户界面**：简单的命令行界面
+- **Proof of Work Consensus**: Mining blocks with adjustable difficulty
+- **Transaction Security**: Digital signatures using ED25519
+- **Data Integrity**: Merkle trees for efficient transaction verification
+- **Persistence**: Save and load blockchain state from file storage
+- **Network Capability**: P2P network synchronization
+- **User Interface**: Simple command-line interface
 
-## 开始使用
+## Getting Started
 
-### 先决条件
-- Rust和Cargo（最新稳定版本）
-- 所需依赖项在`Cargo.toml`文件中指定
+### Prerequisites
+- Rust and Cargo (latest stable version)
+- Required dependencies are specified in the `Cargo.toml` file
 
-### 安装
+### Installation
 ```bash
-# 克隆仓库
-git clone <>
+# Clone the repository
+git clone https://github.com/yourusername/blockchain-implementation.git
 
-# 构建项目
+# Navigate to the project directory
+cd blockchain-implementation
+
+# Build the project
 cargo build --release
 ```
 
-## 使用方法
+## Usage
 
-可以通过命令行界面与区块链交互：
+The blockchain can be interacted with through the command-line interface:
 
 ```bash
-# 创建新钱包
+# Create a new wallet
 cargo run -- create-wallet
 
-# 添加交易
-cargo run -- add-transaction --sender <发送方地址> --receiver <接收方地址> --amount <金额>
+# Add a transaction
+cargo run -- add-transaction --sender <SENDER_ADDRESS> --receiver <RECEIVER_ADDRESS> --amount <AMOUNT>
 
-# 挖掘新区块
-cargo run -- mine-block --miner <矿工地址>
+# Mine a new block
+cargo run -- mine-block --miner <MINER_ADDRESS>
 
-# 验证区块链
+# Validate the blockchain
 cargo run -- validate-chain
 ```
 
-## 技术细节
+## Technical Details
 
-### 共识算法
-该项目使用工作量证明（PoW）作为共识机制，矿工必须找到满足特定难度标准的哈希值。创建区块链时可以配置难度。
+### Consensus Algorithm
+The project uses Proof of Work (PoW) for consensus, where miners must find a hash that meets certain difficulty criteria. The difficulty is configurable when creating the blockchain.
 
-### 密码学
-- **哈希计算**：用于区块哈希的SHA-256
-- **签名**：用于交易签名的ED25519
-- **密钥管理**：用于存储的PKCS#8格式
+### Cryptography
+- **Hashing**: SHA-256 for block hashing
+- **Signatures**: ED25519 for transaction signing
+- **Key Management**: PKCS#8 format for storage
 
-### 数据结构
-- **区块**：包含区块头元数据和交易列表
-- **默克尔树**：交易哈希的二叉树，用于高效验证
-- **交易**：包括发送方、接收方、金额和签名
+### Data Structures
+- **Block**: Contains block header metadata and transaction list
+- **Merkle Tree**: Binary tree of transaction hashes for efficient verification
+- **Transaction**: Includes sender, receiver, amount, and signature
 
-### 网络
-简单的点对点网络，具有跨节点同步区块链数据的能力。
+### Networking
+Simple peer-to-peer network with capabilities to sync blockchain data across nodes.
